@@ -1,0 +1,52 @@
+syntax = "proto3";
+package pack_user_api;
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+option go_package = "/pkg;pack";
+enum Role {
+  ADMIN = 0;
+  USER = 1;
+}
+service User {
+  rpc Create(CreateRequest) returns (CreateResponse);
+  rpc Get(GetRequest) returns (GetResponse);
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty);
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty);
+}
+message Is_User {
+  int64 id = 1;
+  string name = 2;
+  string email = 3;
+  string password = 4;
+  string password_confirm = 5;
+  Role role = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp update_at = 8;
+}
+message CreateRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+  string password_confirm = 4;
+  Role role = 5;
+}
+message CreateResponse {
+  int64 id = 1;
+}
+message GetRequest {
+  int64 id = 1;
+}
+message GetResponse {
+  Is_User user = 1;
+}
+message UpdateRequest {
+  int64 id = 1;
+  google.protobuf.StringValue name = 2;
+  google.protobuf.StringValue email = 3;
+  Role role = 4;
+}
+message DeleteRequest {
+  int64 id = 1;
+}
